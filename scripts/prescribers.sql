@@ -1,21 +1,33 @@
 1. 
     a. Which prescriber had the highest total number of claims (totaled over all drugs)? Report the npi and the total number of claims.
 	
-	select nppes_provider_first_name,nppes_provider_last_org_name, npi, total_claim_amount
-	from prescriber inner join prescrition
-	on 
+	select nppes_provider_first_name,nppes_provider_last_org_name, prescriber.npi, prescription.total_claim_count
+	from prescriber inner join prescription
+	on prescriber.npi = prescription.npi
+	ORDER BY prescription.total_claim_count DESC;
 	
-	
-	select *
-	from prescriber
-	
+	-ANSWER: David Coffey|npi:1912011792|4538
+			
     b. Repeat the above, but this time report the nppes_provider_first_name, nppes_provider_last_org_name,  specialty_description, and the total number of claims.
 	
+	select nppes_provider_first_name,nppes_provider_last_org_name, specialty_description ,prescription.total_claim_count
+		from prescriber inner join prescription
+		on prescriber.npi = prescription.npi
+		ORDER BY prescription.total_claim_count DESC;
 	
+	Answer: David Coffey| Family Practice | 4538
 
 2. 
     a. Which specialty had the most total number of claims (totaled over all drugs)?
-
+	
+	select specialty_description, SUM(total_claim_count)
+	from prescriber inner join prescription
+	on prescriber.npi = prescription.npi
+	GROUP BY specialty_description
+	ORDER BY total_claim_count DESC;
+	
+	select *
+		from prescriber
     b. Which specialty had the most total number of claims for opioids?
 
     c. **Challenge Question:** Are there any specialties that appear in the prescriber table that have no associated prescriptions in the prescription table?
