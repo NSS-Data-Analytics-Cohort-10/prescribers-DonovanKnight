@@ -21,23 +21,38 @@
     a. Which specialty had the most total number of claims (totaled over all drugs)?
 	
 	select specialty_description, SUM(total_claim_count)
-	from prescriber inner join prescription
+	from prescriber left join prescription
 	on prescriber.npi = prescription.npi
-	GROUP BY specialty_description
 	ORDER BY total_claim_count DESC;
 	
 	select *
 		from prescriber
     b. Which specialty had the most total number of claims for opioids?
+	
+	
 
     c. **Challenge Question:** Are there any specialties that appear in the prescriber table that have no associated prescriptions in the prescription table?
 
     d. **Difficult Bonus:** *Do not attempt until you have solved all other problems!* For each specialty, report the percentage of total claims by that specialty which are for opioids. Which specialties have a high percentage of opioids?
-
+	select * 
+	from drug
+	select * 
+	from zip_fips
+	select *
+	from prescription 
 3. 
     a. Which drug (generic_name) had the highest total drug cost?
+	
+	QUESTIONNNNNN how to use cast function to get money?
+
+	select drug.generic_name,prescription.total_drug_cost
+	from drug inner join prescription
+	on drug.drug_name = prescription.drug_name
+	ORDER BY prescription.total_drug_cost DESC;
 
     b. Which drug (generic_name) has the hightest total cost per day? **Bonus: Round your cost per day column to 2 decimal places. Google ROUND to see how this works.**
+	
+	select drug.generic_name
 
 4. 
     a. For each drug in the drug table, return the drug name and then a column named 'drug_type' which says 'opioid' for drugs which have opioid_drug_flag = 'Y', says 'antibiotic' for those drugs which have antibiotic_drug_flag = 'Y', and says 'neither' for all other drugs.
@@ -46,6 +61,13 @@
 
 5. 
     a. How many CBSAs are in Tennessee? **Warning:** The cbsa table contains information for all states, not just Tennessee.
+	
+	select cbsa.cbsaname
+	from cbsa
+	WHERE cbsa.cbsaname ='TN';
+	
+	select *
+	from cbsa
 
     b. Which cbsa has the largest combined population? Which has the smallest? Report the CBSA name and total population.
 
